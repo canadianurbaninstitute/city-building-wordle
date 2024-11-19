@@ -345,8 +345,8 @@
     </div>
 
   <script>
-    //const words = [ "Local", "Block", "Urban", "Infra", "Bikes", "Parks", "Train", "Wards", "Built", "Metro", "House" ];
-    const words = [ "Urban" ];
+    const words = [ "Local", "Block", "Urban", "Infra", "Bikes", "Parks", "Train", "Wards", "Built", "Metro", "House" ];
+    //const words = [ "Urban" ];
 
     
     const WORD_LENGTH = 5;
@@ -564,7 +564,7 @@
       });
       
       if (isWin) {
-        modalTitle.textContent = 'Congratulations!';
+        modalTitle.textContent = `Congratulations! \nThe word was ${targetWord}!`;
         modalMessage.textContent = `You solved the City Building Wordle in ${currentRow + 1} attempts!`;
       } else {
         modalTitle.textContent = 'Good Try!';
@@ -626,7 +626,7 @@
         shareText += '\n';
       });
       
-      shareText += `\nGuessed in ${currentRow + 1}/6 attempts`;
+      shareText += `\nGuessed in ${currentRow + 1}/6 attempts\nThe word was ${targetWord}!`;
       
       // Copy to clipboard
       navigator.clipboard.writeText(shareText).then(() => {
