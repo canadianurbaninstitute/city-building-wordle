@@ -194,6 +194,8 @@
     @media only screen and (min-width: 768px) {
       #logos {
         flex-direction: row;
+        gap: 3em;
+
       }
     }
   </style>
@@ -573,6 +575,28 @@
   <div id="message"></div>
   <button id="new-game">New Game</button>
   <h4>The city building themed word changes when you start a new game!</h4>
+  <br>
+
+  <footer class="footer" style="background-color: #023D5B; padding: 20px; border-radius: 1em;">
+    <div class="footer-container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+      <!-- Social Links -->
+      <ul class="footer-social-links" style="list-style: none; padding: 0; display: flex; gap: 10px; margin-bottom: 15px;">
+        <li><a href="https://twitter.com/CANURB" target="_blank" rel="noopener" style="text-decoration: none; color: #fff;">Twitter</a></li>
+        <li><a href="https://ca.linkedin.com/company/canadian-urban-institute" target="_blank" rel="noopener" style="text-decoration: none; color: #fff;">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/canadianurbaninstitute/" target="_blank" rel="noopener" style="text-decoration: none; color: #fff;">Instagram</a></li>
+        <li><a href="https://www.facebook.com/canurb/" target="_blank" rel="noopener" style="text-decoration: none; color: #fff;">Facebook</a></li>
+      </ul>
+  
+      <!-- Contact Links -->
+      <ul class="footer-contact-links" style="list-style: none; padding: 0; display: flex; gap: 10px; margin-bottom: 15px;">
+        <li><a href="https://canurb.org/contact/" style="text-decoration: none; color: #fff;">Contact</a></li>
+        <li><a href="https://canurb.org/donate/" style="text-decoration: none; color: #fff;">Donate</a></li>
+        <li><a href="https://canurb.org/subscribe/" style="text-decoration: none; color: #fff;">Newsletter</a></li>
+      </ul>
+  
+    </div>
+  </footer>
+  
 
   <!-- Modal -->
   <div id="modal">
@@ -583,6 +607,8 @@
       <button id="share-btn">Share Results</button>
     </div>
   </div>
+
+  
 
   <script>
     const words = ["Plaza", "Green", "Route", "Alley", "Civic", "Zones", "Zoned", "Trail", "County", "Mayor", "Local", "Block", "Urban", "Infra", "Bikes", "Parks", "Train", "Wards", "Built", "Metro", "House"];
@@ -921,3 +947,4 @@
 </body>
 
 </html>
+
