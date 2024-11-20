@@ -12,7 +12,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #013D5A;
+      background-image: radial-gradient(circle at 21% -5.6%, #0481C1 0%, #023D5B 132%);
       margin: 0;
       padding: 20px;
     }
@@ -332,7 +332,7 @@
   <div id="keyboard"></div>
   <div id="message"></div>
   <button id="new-game">New Game</button>
-  <h4>The urban-themed word changes when you start a new game!</h4>
+  <h4>The city building themed word changes when you start a new game!</h4>
 
     <!-- Modal -->
     <div id="modal">
@@ -346,7 +346,17 @@
 
   <script>
     const words = [ "Local", "Block", "Urban", "Infra", "Bikes", "Parks", "Train", "Wards", "Built", "Metro", "House" ];
-    //const words = [ "Urban" ];
+
+    let validWords = new Set();
+
+    async function loadValidWords() {
+      const response = await fetch('words.txt');
+      const text = await response.text();
+      validWords = new Set(text.split('\n').map(word => word.trim().toUpperCase()));
+    }
+
+    // Call this during initialization
+    loadValidWords();
 
     
     const WORD_LENGTH = 5;
@@ -428,29 +438,35 @@
     }
     
     function submitGuess() {
-      const guess = getCurrentGuess();
-      const result = checkGuess(guess);
-      colorizeRow(result);
-      colorizeKeyboard(guess, result);
-      
-      // Store game result for sharing
-      gameResult.push(result);
-      
-      if (guess === targetWord) {
-        gameOver = true;
-        animateWinningRow();
-        showModal(true);
-        return;
-      }
-      
-      currentRow++;
-      currentCol = 0;
-      
-      if (currentRow === MAX_GUESSES) {
-        gameOver = true;
-        showModal(false);
-      }
-    }
+  const guess = getCurrentGuess();
+
+  if (!validWords.has(guess)) {
+    alert('Not a valid word!');
+    return;
+  }
+
+  const result = checkGuess(guess);
+  colorizeRow(result);
+  colorizeKeyboard(guess, result);
+
+  // Store game result for sharing
+  gameResult.push(result);
+
+  if (guess === targetWord) {
+    gameOver = true;
+    animateWinningRow();
+    showModal(true);
+    return;
+  }
+
+  currentRow++;
+  currentCol = 0;
+
+  if (currentRow === MAX_GUESSES) {
+    gameOver = true;
+    showModal(false);
+  }
+}
     
     function animateWinningRow() {
       for (let i = 0; i < WORD_LENGTH; i++) {
@@ -507,12 +523,12 @@
         const key = Array.from(keys).find(k => k.textContent === letter);
         if (key) {
           if (result[i] === 'correct') {
-            key.style.backgroundColor = '#6aaa64';
+            key.style.backgroundColor = '#eee';
             key.style.color = 'white';
-          } else if (result[i] === 'present' && !key.style.backgroundColor.includes('6aaa64')) {
+          } else if (result[i] === 'present' && !key.style.backgroundColor.includes('eee')) {
             key.style.backgroundColor = '#c9b458';
             key.style.color = 'white';
-          } else if (result[i] === 'absent' && !key.style.backgroundColor.includes('6aaa64') && !key.style.backgroundColor.includes('c9b458')) {
+          } else if (result[i] === 'absent' && !key.style.backgroundColor.includes('eee') && !key.style.backgroundColor.includes('c9b458')) {
             key.style.backgroundColor = '#787c7e';
             key.style.color = 'white';
           }
@@ -523,7 +539,7 @@
     function resetKeyboardColors() {
       const keys = document.querySelectorAll('.key');
       keys.forEach(key => {
-        key.style.backgroundColor = '#d3d6da';
+        key.style.backgroundColor = '#eee';
         key.style.color = 'black';
       });
     }
@@ -649,3 +665,4 @@
   </script>
   </body>
   </html>
+
