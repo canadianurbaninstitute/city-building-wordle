@@ -109,7 +109,7 @@
       padding: 8px 12px;
       border: none;
       border-radius: 4px;
-      background-color: #eee;
+      background-color: #d3d6da;
       cursor: pointer;
       font-weight: bold;
       min-width: clamp(28px, 6vw, 40px);
@@ -763,12 +763,12 @@
         const key = Array.from(keys).find(k => k.textContent === letter);
         if (key) {
           if (result[i] === 'correct') {
-            key.style.backgroundColor = '#eee';
+            key.style.backgroundColor = '#6aaa64';
             key.style.color = 'white';
-          } else if (result[i] === 'present' && !key.style.backgroundColor.includes('eee')) {
+          } else if (result[i] === 'present' && !key.style.backgroundColor.includes('6aaa64')) {
             key.style.backgroundColor = '#c9b458';
             key.style.color = 'white';
-          } else if (result[i] === 'absent' && !key.style.backgroundColor.includes('eee') && !key.style.backgroundColor.includes('c9b458')) {
+          } else if (result[i] === 'absent' && !key.style.backgroundColor.includes('6aaa64') && !key.style.backgroundColor.includes('c9b458')) {
             key.style.backgroundColor = '#787c7e';
             key.style.color = 'white';
           }
@@ -862,7 +862,7 @@
     });
 
     document.getElementById('share-btn').addEventListener('click', () => {
-  let shareText = "I solved the State of Canada's Cities 2024 City Building Wordle 🎉\n\n";
+  let shareText = 'I solved the City Building Wordle 🎉\n\n';
 
   // Convert results to emoji grid
   gameResult.forEach(rowResult => {
@@ -883,8 +883,11 @@
 
   shareText += `\nGuessed in ${currentRow + 1}/6 attempts\nThe word was ${targetWord}!`;
 
-  // Use the Web Share API if available
-  if (navigator.share) {
+  // Detect if the user is on a mobile device
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (navigator.share && isMobile) {
+    // Show the native share sheet only on mobile
     navigator.share({
       title: 'City Building Wordle',
       text: shareText,
@@ -894,7 +897,7 @@
       console.error('Error sharing:', err);
     });
   } else {
-    // Fallback to clipboard for unsupported browsers
+    // Fallback to clipboard for non-mobile devices
     navigator.clipboard.writeText(shareText).then(() => {
       alert('Results copied to clipboard!');
     }).catch(err => {
