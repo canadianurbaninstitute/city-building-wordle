@@ -282,6 +282,7 @@
     let currentRow = 0;
     let currentCol = 0;
     let gameOver = false;
+    let gameWon = false;
     let gameResult = [];
 
     function initializeGame() {
@@ -373,6 +374,7 @@
 
       if (guess === targetWord) {
         gameOver = true;
+        gameWon = true;
         showModal(true);
         return;
       }
@@ -382,6 +384,7 @@
 
       if (currentRow === MAX_GUESSES) {
         gameOver = true;
+        gameWon = false;
         showModal(false);
       }
     }
@@ -532,7 +535,7 @@
     // });
 
     document.getElementById('share-btn').addEventListener('click', () => {
-      let shareText = "I solved the State of Canada's Cities 2024 City Building Wordle 🎉\n\n";
+      let shareText = "I played the State of Canada's Cities 2024 City Building Wordle 🎉\n\n";
 
       // Convert results to emoji grid
       gameResult.forEach(rowResult => {
@@ -551,7 +554,13 @@
         shareText += '\n';
       });
 
-      shareText += `\nGuessed in ${currentRow + 1}/6 attempts\nThe word was ${targetWord}!`;
+      shareText += `\nThe word was ${targetWord}!`
+
+      if (gameWon) {
+
+      shareText += `\nI guessed it in ${currentRow + 1}/6 attempts`;
+
+      }
 
       console.log(shareText);
 
@@ -579,13 +588,25 @@
     });
 
 
-    // Handle modal click outside
-    window.addEventListener('click', (e) => {
-      const modal = document.getElementById('modal');
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
+// Modify the modal click event to ensure it works on mobile
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('modal');
+  
+  // Check if the click is directly on the modal background
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+
+// Add a touch event listener for better mobile support
+window.addEventListener('touchstart', (e) => {
+  const modal = document.getElementById('modal');
+  
+  // Check if the touch is directly on the modal background
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+});
 
     // Initialize the game
     initializeGame();
