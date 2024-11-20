@@ -861,36 +861,48 @@
       }
     });
 
-    // Handle share button
     document.getElementById('share-btn').addEventListener('click', () => {
-      let shareText = 'I solved the City Building Wordle\n\n';
+  let shareText = "I solved the State of Canada's Cities 2024 City Building Wordle 🎉\n\n";
 
-      // Convert results to emoji grid
-      gameResult.forEach(rowResult => {
-        rowResult.forEach(cellResult => {
-          switch (cellResult) {
-            case 'correct':
-              shareText += '🟩';
-              break;
-            case 'present':
-              shareText += '🟨';
-              break;
-            default:
-              shareText += '⬜';
-          }
-        });
-        shareText += '\n';
-      });
-
-      shareText += `\nGuessed in ${currentRow + 1}/6 attempts\nThe word was ${targetWord}!`;
-
-      // Copy to clipboard
-      navigator.clipboard.writeText(shareText).then(() => {
-        alert('Results copied to clipboard!');
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
+  // Convert results to emoji grid
+  gameResult.forEach(rowResult => {
+    rowResult.forEach(cellResult => {
+      switch (cellResult) {
+        case 'correct':
+          shareText += '🟩';
+          break;
+        case 'present':
+          shareText += '🟨';
+          break;
+        default:
+          shareText += '⬜';
+      }
     });
+    shareText += '\n';
+  });
+
+  shareText += `\nGuessed in ${currentRow + 1}/6 attempts\nThe word was ${targetWord}!`;
+
+  // Use the Web Share API if available
+  if (navigator.share) {
+    navigator.share({
+      title: 'City Building Wordle',
+      text: shareText,
+    }).then(() => {
+      console.log('Shared successfully!');
+    }).catch(err => {
+      console.error('Error sharing:', err);
+    });
+  } else {
+    // Fallback to clipboard for unsupported browsers
+    navigator.clipboard.writeText(shareText).then(() => {
+      alert('Results copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
+});
+
 
     // Handle modal click outside
     window.addEventListener('click', (e) => {
